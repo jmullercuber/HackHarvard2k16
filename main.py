@@ -4,19 +4,19 @@ from RedditScraper import RedditScraper
 
 # collect text data from them
 reddit = RedditScraper()
-internet_documents = {  'reddit-politics': reddit.get_documents("politics", 1)  }
+internet_documents = {  'reddit-politics': reddit.get_documents("politics", 2)  }
 	
 print(len(internet_documents['reddit-politics']))
 
 # For every source Analyze text data with the Microsoft Cognitive Services Text Analytics API
 
-'''sentiments = {}
+sentiments = {}
 for key in internet_documents:
 	sentiments[key] = cognitive.documents_to_sentiments(internet_documents[key])
 	
 s_file = open('sentiments.data', 'w')
 s_file.write(json.dumps(sentiments))
-'''
+
 topics = {}
 for key in internet_documents:
 	topics[key] = cognitive.documents_to_topics(internet_documents[key])
