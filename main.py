@@ -4,7 +4,7 @@ from RedditScraper import RedditScraper
 
 # collect text data from them
 reddit = RedditScraper()
-internet_documents = {  'reddit': reddit.get_documents()  }
+internet_documents = {  'reddit': reddit.get_documents('news', 5)  }
 
 # For every source Analyze text data with the Microsoft Cognitive Services Text Analytics API
 # a = cognitive.documents_to_topics(stuff)
