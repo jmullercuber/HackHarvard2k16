@@ -16,10 +16,10 @@ def getBearer(key, secret):
 	return bearer
 
 def getResults(bearer, hashtag):
-	url = '1.1/search/tweets.json?q=%23' + hashtag
+	url = '/1.1/search/tweets.json?q=%23' + hashtag
 	headers = {'Authorization': 'Bearer ' + bearer}
 	conn = httplib.HTTPSConnection('api.twitter.com')
-	conn.request('GET', url, 'result_type=mixed', headers)
+	conn.request('GET', url, '', headers)
 	response = conn.getresponse().read()
 	return response
 
