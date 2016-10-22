@@ -35,32 +35,33 @@ if __name__ == "__main__":
 		t_file.write(json.dumps(topics))
 		t_file.close()
 	
-	topics_by_score = {}
-	documents_by_id = {}
-	sentiments_by_doc_id = {}
 	
-	for i in range(len(topics['reddit-politics']['result']['operationProcessingResult']['topics'])):
-		topics_by_score[topics['reddit-politics']['result']['operationProcessingResult']['topics'][i]['keyPhrase']] = topics['reddit-politics']['result']['operationProcessingResult']['topics'][i]['score']
-		
-	for i in range(len(topics['reddit-politics']['body']['documents'])):
-		documents_by_id[topics['reddit-politics']['body']['documents'][i]['id']] = topics['reddit-politics']['body']['documents'][i]['text']
-		
-	for i in range(len(sentiments['reddit-politics']['result']['documents'])):
-		sentiments_by_doc_id[sentiments['reddit-politics']['result']['documents'][i]['id']] = sentiments['reddit-politics']['result']['documents'][i]['score']
-		
-	sorted = sorted(topics_by_score.items(), key=operator.itemgetter(1))
 	
-	for item in sorted:
-		print(item[1]),
-		print(":\t"),
-		print(item[0])
-		
+	c = {}
+	
+	for source in topics:
+		c[source] = []
+		topic_objs = topics[source]['result']['operationProcessingResult']['topics']
+		topic_asgn = topics[source]['result']['operationProcessingResult']['topicAssignments']
+		source_sents = sentiments[source]['result']['documents']
+		for i in range(len(topic_objs)):
+			topic = topic_objs[i]
+			t_id = topic['id']
+			t_key = topic['keyPhrase']
+			topic_sents = []
+			for j in range(len(topic_asgn)):
+				if topic_asgn[j]['topicId'] == t_id:
+					d_id = topic_asgn[j]['documentId']
+					for k in range(len(source_sents)):
+						if source_sents[k]['id'] == d_id:
+							topic_sents.append((source_sents[k]['score'], topic_asgn[j]['distance']))
+			c[source].append({t_key: topic_sents})
 	
 	# Do something to turn topics, and sentiments to desired format c
 	# c = f(topics, sentiments)
 	
 	#### At this point we have data of the form: {'internet_source1': [{'topic1': [sentiment_array1], 'topic2': [sentiment_array2] ...}]}
-	### Example: {'reddit': [{'presidential election': [0.232, 0.978, 0.315], 'puppies': [1.000, 0.999, 0.978] ... }]}
+	### Example: {'reddit': [{'presidential election': [(0.232, .5), (0.978, .25), (0.315, .01)], 'puppies': [(1.000, .2), (0.999, .7), (0.978, 1)] ... }]}
 	
 	# Data open for reduction
 	
