@@ -1,12 +1,29 @@
-import cognitive
+import cognitive, json
 # Establish connections to internet sources
 from RedditScraper import RedditScraper
 
 # collect text data from them
 reddit = RedditScraper()
-internet_documents = {  'reddit': reddit.get_documents('news', 5)  }
+internet_documents = {  'reddit-politics': reddit.get_documents("politics", 1)  }
+	
+print(len(internet_documents['reddit-politics']))
 
 # For every source Analyze text data with the Microsoft Cognitive Services Text Analytics API
+
+'''sentiments = {}
+for key in internet_documents:
+	sentiments[key] = cognitive.documents_to_sentiments(internet_documents[key])
+	
+s_file = open('sentiments.data', 'w')
+s_file.write(json.dumps(sentiments))
+'''
+topics = {}
+for key in internet_documents:
+	topics[key] = cognitive.documents_to_topics(internet_documents[key])
+
+t_file = open('topics.data', 'w')
+t_file.write(json.dumps(topics))
+	
 # a = cognitive.documents_to_topics(stuff)
 # b = cognitive.documents_to_sentiments(same stuff)
 
