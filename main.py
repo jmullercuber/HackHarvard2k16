@@ -14,7 +14,7 @@ if __name__ == "__main__":
     
     sentiments = {
         source: cognitive.documents_to_sentiments(docs)
-        for source, docs in internet_documents.items():
+        for source, docs in internet_documents.items()
     }
     
     s_file = open('sentiments.data', 'w')
@@ -22,7 +22,7 @@ if __name__ == "__main__":
     
     topics = {
         source: cognitive.documents_to_topics(docs)
-        for source, docs in internet_documents.items():
+        for source, docs in internet_documents.items()
     }
     
     
