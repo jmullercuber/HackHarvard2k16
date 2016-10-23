@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-def easy_graph(t):
+def topic_graph(t):
     # Extract topic string and ploints from t parameter
     topic = t.keys()[0]
     points = t[topic]
@@ -23,3 +23,6 @@ def easy_graph(t):
     plt.show()
     
     return x,y,plt
+
+def bar_graph(ts):
+    
