@@ -55,7 +55,8 @@ if __name__ == "__main__":
 					for k in range(len(source_sents)):
 						if source_sents[k]['id'] == d_id:
 							topic_sents.append((source_sents[k]['score'], topic_asgn[j]['distance']))
-			c[source].append({t_key: topic_sents})
+			if len(topic_sents) >= 5:
+				c[source].append({t_key: topic_sents})
 	
 	
 	# Do something to turn topics, and sentiments to desired format c
@@ -63,8 +64,8 @@ if __name__ == "__main__":
 	
 	#### At this point we have data of the form: {'internet_source1': [{'topic1': [sentiment_array1], 'topic2': [sentiment_array2] ...}]}
 	### Example: {'reddit': [{'presidential election': [(0.232, .5), (0.978, .25), (0.315, .01)], 'puppies': [(1.000, .2), (0.999, .7), (0.978, 1)] ... }]}
-	from plot import easy_graph
-	eg = easy_graph(c['reddit-politics'][0])
+	from plot import easy_graph2
+	eg = easy_graph2(c['reddit-politics'])
 	
 	
 	# Data open for reduction
