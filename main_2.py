@@ -57,6 +57,7 @@ if __name__ == "__main__":
 							topic_sents.append((source_sents[k]['score'], topic_asgn[j]['distance']))
 			c[source].append({t_key: topic_sents})
 	
+	
 	# Do something to turn topics, and sentiments to desired format c
 	# c = f(topics, sentiments)
 	
