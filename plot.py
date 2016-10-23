@@ -114,5 +114,7 @@ def bar_graph(ts):
 
 def extract_topic(t):
 	topic = t.keys()[0]
+	if len(t[topic]) == 0:
+		return topic, [], []
 	x, y = zip(*(t[topic]))
 	return topic, x, y

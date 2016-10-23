@@ -82,7 +82,10 @@ if __name__ == "__main__":
 					for k in source_sents:
 						if k['id'] == j['documentId']:
 							topic_sents.append((k['score'], j['distance']))
-			if len(topic_sents) >= 0:
+			if len(topic_sents) == 0:
+				# at later point, would be good to find source of these errors
+				print "topic error: ", source, topic
+			if len(topic_sents) > 0:
 				c[source].append({t_key: topic_sents})
 	
 	
