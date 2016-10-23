@@ -5,9 +5,9 @@ from RedditScraper import RedditScraper
 
 if __name__ == "__main__":
 	# collect text data from them
-	reddit = RedditScraper()
-	internet_documents = {  'reddit-politics': reddit.get_documents("politics", 1),
-							'reddit-the-donald': reddit.get_documents("the_donald", 3)  }
+	'''reddit = RedditScraper()
+	internet_documents = {  'reddit-politics': reddit.get_documents("politics", 3),
+							'reddit-the-donald': reddit.get_documents("the_donald", 3)  }'''
 
 	# For every source analyze text data with the Microsoft Cognitive Services Text Analytics API
 	s_file_path = "./sentiments.data"
@@ -34,7 +34,7 @@ if __name__ == "__main__":
 			source: cognitive.documents_to_topics(docs)
 			for source, docs in internet_documents.items()
 		}
-		t_file = open('sentiments.data', 'w')
+		t_file = open('topics.data', 'w')
 		t_file.write(json.dumps(topics))
 		t_file.close()
 	
@@ -58,7 +58,7 @@ if __name__ == "__main__":
 					for k in range(len(source_sents)):
 						if source_sents[k]['id'] == d_id:
 							topic_sents.append((source_sents[k]['score'], topic_asgn[j]['distance']))
-			if len(topic_sents) >= 5:
+			if len(topic_sents) >= 4:
 				c[source].append({t_key: topic_sents})
 	
 	
