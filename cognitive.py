@@ -50,6 +50,8 @@ def documents_to_topics(docs):
 	response = conn.getresponse()
 	
 	op_loc = response.getheader('operation-location')
+	print(response.getheaders())
+	print(op_loc)
 	op_loc = op_loc[op_loc.index('.com') + 4 :]
 	
 	print(op_loc)
