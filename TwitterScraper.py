@@ -13,15 +13,15 @@ class TwitterScraper( Scraper ):
         
         # setup, get trending tags
         b = getBearer(key, secret)
-        trends = [t for t,n in getTrending(b, WOEID)]
+        trends = getTrending(b, WOEID)
         results = []
         
         # Go through the trending hashtags
-        for tags in trends:
+        for tag, query, n in trends:
             if self.verbose:
-                print "....Looking at trend:", tags
+                print "....collecting tweets for trend:", tag
             # Get 100 tweets matching
-            r = getResults(b, tags)
+            r = getResults(b, query)
             # If getResults didn't fail
             if len(r) > 0:
                 # for every returned tweet

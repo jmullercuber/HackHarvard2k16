@@ -38,7 +38,7 @@ def getTrending(bearer, woeid):
     tweet_data = json.loads(response)
     
     trends = [
-        (tag['name'], tag['tweet_volume'])
+        (tag['name'], tag['query'], tag['tweet_volume'])
         for tag in tweet_data[0]['trends']
     ]
 
