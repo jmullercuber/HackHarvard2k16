@@ -1,18 +1,20 @@
 import matplotlib.pyplot as plt
+import matplotlib.cm as cm
 import numpy as np
 	
 def easy_graph2(ts):
 	
 	# Label your graphs!
-	plt.title('Topic"')
+	plt.title('Topic')
 	plt.xlim(-1, 1)
 	plt.xlabel("Sentiment")
 	plt.ylim(0,1)
 	plt.ylabel("Relevance")
 	
-	for i in range(len(ts)):
+	colors = cm.rainbow(np.linspace(0, 1, len(ts)))
+	
+	for t, c in zip(ts, colors):
 		# Extract topic string and ploints from t parameter
-		t = ts[i]
 		topic = t.keys()[0]
 		points = t[topic]
 		if len(points) < 0:
@@ -23,7 +25,7 @@ def easy_graph2(ts):
 		# And translate
 		x = (np.array(x) - 0.5)*2
 	
-		plt.plot(x, y)
+		plt.scatter(x, y, color=c)
 	
 	# Present your graph
 	plt.show()

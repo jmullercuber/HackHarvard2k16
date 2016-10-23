@@ -56,7 +56,7 @@ if __name__ == "__main__":
 					for k in source_sents:
 						if k['id'] == j['documentId']:
 							topic_sents.append((k['score'], j['distance']))
-			if len(topic_sents) >= 4:
+			if len(topic_sents) >= 0:
 				c[source].append({t_key: topic_sents})
 	
 	
@@ -71,7 +71,7 @@ if __name__ == "__main__":
 	# Visualize data
 
 	from plot import *
-	bg = bar_graph(c['reddit-politics'])
-	g = bar_graph(c['reddit-the-donald'])
+	bg = easy_graph2(c['reddit-politics'])
+	g = easy_graph2(c['reddit-the-donald'])
 
 # Cool, we're done!
