@@ -16,7 +16,7 @@ class RedditScraper( Scraper ):
 		subreddit_data = json.loads(subreddit_data) # Convert from json to dict
 		
 		documents = []
-		for i in range(qty):
+		for i in range(1, qty):
 			documents.extend(self.get_comments_for_post(subreddit_data['data']['children'][i]['data']['permalink']))
 		
 		conn.close()

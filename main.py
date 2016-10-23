@@ -6,7 +6,7 @@ from RedditScraper import RedditScraper
 if __name__ == "__main__":
 	# collect text data from them
 	reddit = RedditScraper()
-	internet_documents = {  'reddit-politics': reddit.get_documents("politics", 1)  }
+	internet_documents = {  'reddit-politics': reddit.get_documents("politics", 3)}
 			
 	# For every source analyze text data with the Microsoft Cognitive Services Text Analytics API
 	s_file_path = "./sentiments.data"
