@@ -64,9 +64,9 @@ if __name__ == "__main__":
 	
 	#### At this point we have data of the form: {'internet_source1': [{'topic1': [sentiment_array1], 'topic2': [sentiment_array2] ...}]}
 	### Example: {'reddit': [{'presidential election': [(0.232, .5), (0.978, .25), (0.315, .01)], 'puppies': [(1.000, .2), (0.999, .7), (0.978, 1)] ... }]}
-	from plot import easy_graph2
-	eg = easy_graph2(c['reddit-politics'])
-	
+
+	from plot import *
+	bg = bar_graph(c['reddit-politics'])	
 	
 	# Data open for reduction
 	
