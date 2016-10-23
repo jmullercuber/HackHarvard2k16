@@ -6,8 +6,11 @@ from RedditScraper import RedditScraper
 if __name__ == "__main__":
 	# collect text data from them
 	'''reddit = RedditScraper()
-	internet_documents = {  'reddit-politics': reddit.get_documents("politics", 3),
-							'reddit-the-donald': reddit.get_documents("the_donald", 3)  }'''
+	internet_documents = {  'reddit-sports': reddit.get_documents("sports", 2),
+							'reddit-baseball': reddit.get_documents("baseball", 2),
+							'reddit-cubs': reddit.get_documents("CHICubs", 2),
+							'reddit-dodgers': reddit.get_documents("dodgers", 2),
+							'reddit-all': reddit.get_documents("all", 2)}'''
 
 	# For every source analyze text data with the Microsoft Cognitive Services Text Analytics API
 	s_file_path = "./sentiments.data"
@@ -46,6 +49,10 @@ if __name__ == "__main__":
 		c[source] = []
 		topic_objs = topics[source]['result']['operationProcessingResult']['topics']
 		topic_asgn = topics[source]['result']['operationProcessingResult']['topicAssignments']
+		if "dodgers" in source:
+			print("\n"*10)
+			print(source)
+			print(sentiments[source])
 		source_sents = sentiments[source]['result']['documents']
 		for topic in topic_objs:
 			t_id = topic['id']
@@ -71,8 +78,6 @@ if __name__ == "__main__":
 	# Visualize data
 
 	from plot import *
-	docs_per_sources_graph(c['reddit-politics'], c['reddit-the-donald'])
-	bg = easy_graph2(c, 'reddit-politics')
-	g = easy_graph2(c, 'reddit-the-donald')
+	docs_per_sources_graph(c['reddit-sports'],c['reddit-baseball'],c['reddit-cubs'],c['reddit-dodgers'])
 
 # Cool, we're done!
