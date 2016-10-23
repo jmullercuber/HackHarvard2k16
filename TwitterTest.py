@@ -2,10 +2,11 @@ import json, httplib, urllib, string, base64, ast
 
 key = 'kFxjNI3AlMiWGCVVIdg2mwLVf'
 secret = 'VbvyqLW2B0LB3BNCVZfJaSD7djvAbYuQgBvWnoz7oycoINqKoF'
+WOEID = 23424977
 
 def getBearer(key, secret):
-    #Ideally should url encode the key and secret,
-    #but it will work ok without for now
+    # Ideally should url encode the key and secret,
+    # but it will work ok without for now
 
     credentials = base64.b64encode(key + ':' + secret)
     headers = {'Authorization': 'Basic ' + credentials, 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'}
@@ -33,11 +34,13 @@ def getTrending(bearer, woeid):
     response = conn.getresponse().read()
     tweet_data = json.loads(response)
     
-    trends = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] #Ideally this would not need to be explicitly done... Python is weird
-
-    for count in range(0, 10):
-        trends[count] = (tweet_data[0]['trends'][count]['name'], tweet_data[0]['trends'][count]['tweet_volume']) 
+    trends = [
+        (tag['name'], tag['tweet_volume'])
+        for tag in tweet_data[0]['trends']
+    ]
 
     return trends
 
-print getTrending(getBearer(key, secret), 23424977) #test
+if __name__ == "__main__":
+    #test
+    print getTrending(getBearer(key, secret), WOEID)

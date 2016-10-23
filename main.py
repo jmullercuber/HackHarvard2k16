@@ -5,12 +5,12 @@ from RedditScraper import RedditScraper
 
 if __name__ == "__main__":
 	# collect text data from them
-	reddit = RedditScraper()
+	'''reddit = RedditScraper()
 	internet_documents = {  'reddit-sports': reddit.get_documents("sports", 2),
 							'reddit-baseball': reddit.get_documents("baseball", 2),
 							'reddit-cubs': reddit.get_documents("CHICubs", 2),
 							'reddit-dodgers': reddit.get_documents("dodgers", 2),
-							'reddit-all': reddit.get_documents("all", 2)}
+							'reddit-all': reddit.get_documents("all", 2)}'''
 
 	# For every source analyze text data with the Microsoft Cognitive Services Text Analytics API
 	s_file_path = "./sentiments.data"
@@ -78,10 +78,6 @@ if __name__ == "__main__":
 	# Visualize data
 
 	from plot import *
-	bg = easy_graph2(c['reddit-sports'])
-	g = easy_graph2(c['reddit-baseball'])
-	bg = easy_graph2(c['reddit-cubs'])
-	g = easy_graph2(c['reddit-dodgers'])
-	bg = easy_graph2(c['reddit-all'])
+	docs_per_sources_graph(c['reddit-sports'],c['reddit-baseball'],c['reddit-cubs'],c['reddit-dodgers'])
 
 # Cool, we're done!

@@ -1,31 +1,66 @@
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 import numpy as np
+
+def easy_graph2(c, source_name):
 	
-def easy_graph2(ts):
+	ts = c[source_name]
 	
 	# Label your graphs!
-	plt.title('Topic')
+	plt.title('Documents Associated with: ' + source_name)
 	plt.xlim(-1, 1)
 	plt.xlabel("Sentiment")
 	plt.ylim(0,1)
 	plt.ylabel("Relevance")
 	
+	# Mulitple colors avaliable
 	colors = cm.rainbow(np.linspace(0, 1, len(ts)))
 	
+	# Plot each topic in a different color
 	for t, c in zip(ts, colors):
 		# Extract topic string and ploints from t parameter
 		topic = t.keys()[0]
 		points = t[topic]
-		if len(points) < 0:
-			continue		
 	
 		# Transpose points from coordinate list
 		x, y = zip(*points)
 		# And translate
 		x = (np.array(x) - 0.5)*2
-	
+		
+		# Plot
 		plt.scatter(x, y, color=c)
+	
+	# Present your graph
+	plt.show()
+	
+	return x,y,plt
+
+def docs_per_sources_graph(*sources):
+	
+	# Label your graphs!
+	plt.title('Documents Distribution per Source')
+	plt.xlim(-1, 1)
+	plt.xlabel("Sentiment")
+	plt.ylim(0,1)
+	plt.ylabel("Relevance")
+	
+	# Mulitple colors avaliable
+	colors = cm.rainbow(np.linspace(0, 1, len(sources)))
+	
+	# Plot each topic in a different color
+	for ts, c in zip(sources, colors):
+		for t in ts:
+			# Extract topic string and points from t parameter
+			topic = t.keys()[0]
+			points = t[topic]
+			
+			# Transpose points from coordinate list
+			x, y = zip(*points)
+			# And translate
+			x = (np.array(x) - 0.5)*2
+			
+			# Plot
+			plt.scatter(x, y, color=c)
 	
 	# Present your graph
 	plt.show()
