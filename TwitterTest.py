@@ -16,16 +16,16 @@ def getBearer(key, secret):
     bearer = ast.literal_eval(response.read())['access_token']
     return bearer
 
-#Gets the most recent tweets for a hashtag
+# Gets the most recent tweets for a hashtag
 def getResults(bearer, hashtag):
-    url = '/1.1/search/tweets.json?q=%23' + hashtag
+    url = '/1.1/search/tweets.json?q=%23' + hashtag + '&count=100'
     headers = {'Authorization': 'Bearer ' + bearer}
     conn = httplib.HTTPSConnection('api.twitter.com')
     conn.request('GET', url, '', headers)
     response = conn.getresponse().read()
     return response
 
-#Returns a list of the top 10 trending topics and their tweet counts
+# Returns a list of the top 10 trending topics and their tweet counts
 def getTrending(bearer, woeid):
     url = '/1.1/trends/place.json?id=' + str(woeid)
     headers = {'Authorization': 'Bearer ' + bearer}
@@ -43,4 +43,6 @@ def getTrending(bearer, woeid):
 
 if __name__ == "__main__":
     #test
-    print getTrending(getBearer(key, secret), WOEID)
+    b = getBearer(key, secret)
+    trends = getTrending(b, WOEID)
+    print trends
