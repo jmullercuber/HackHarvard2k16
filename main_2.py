@@ -47,17 +47,15 @@ if __name__ == "__main__":
 		topic_objs = topics[source]['result']['operationProcessingResult']['topics']
 		topic_asgn = topics[source]['result']['operationProcessingResult']['topicAssignments']
 		source_sents = sentiments[source]['result']['documents']
-		for i in range(len(topic_objs)):
-			topic = topic_objs[i]
+		for topic in topic_objs:
 			t_id = topic['id']
 			t_key = topic['keyPhrase']
 			topic_sents = []
-			for j in range(len(topic_asgn)):
-				if topic_asgn[j]['topicId'] == t_id:
-					d_id = topic_asgn[j]['documentId']
-					for k in range(len(source_sents)):
-						if source_sents[k]['id'] == d_id:
-							topic_sents.append((source_sents[k]['score'], topic_asgn[j]['distance']))
+			for j in topic_asgn:
+				if j['topicId'] == t_id:
+					for k in source_sents:
+						if k['id'] == j['documentId']:
+							topic_sents.append((k['score'], j['distance']))
 			if len(topic_sents) >= 5:
 				c[source].append({t_key: topic_sents})
 	
@@ -67,13 +65,13 @@ if __name__ == "__main__":
 	
 	#### At this point we have data of the form: {'internet_source1': [{'topic1': [sentiment_array1], 'topic2': [sentiment_array2] ...}]}
 	### Example: {'reddit': [{'presidential election': [(0.232, .5), (0.978, .25), (0.315, .01)], 'puppies': [(1.000, .2), (0.999, .7), (0.978, 1)] ... }]}
-
-	from plot import *
-	bg = bar_graph(c['reddit-politics'])	
-	g = bar_graph(c['reddit-the-donald'])
 	
 	# Data open for reduction
 	
 	# Visualize data
+
+	from plot import *
+	bg = bar_graph(c['reddit-politics'])
+	g = bar_graph(c['reddit-the-donald'])
 
 # Cool, we're done!
