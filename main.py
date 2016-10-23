@@ -1,10 +1,13 @@
 import cognitive, json, os.path, operator
 # Establish connections to internet sources
 from RedditScraper import RedditScraper
+from TwitterScraper import TwitterScraper
 
 
 if __name__ == "__main__":
 	# collect text data from them
+	twitter = TwitterScraper();
+	internet_documents = {'twitter': twitter.get_documents()}
 	'''reddit = RedditScraper()
 	internet_documents = {  'reddit-sports': reddit.get_documents("sports", 2),
 							'reddit-baseball': reddit.get_documents("baseball", 2),
@@ -78,6 +81,7 @@ if __name__ == "__main__":
 	# Visualize data
 
 	from plot import *
-	docs_per_sources_graph(c['reddit-sports'],c['reddit-baseball'],c['reddit-cubs'],c['reddit-dodgers'])
+	docs_per_sources_graph(c['twitter'])
+	bar_graph(c['twitter'])
 
 # Cool, we're done!
