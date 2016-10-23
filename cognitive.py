@@ -15,6 +15,7 @@ def documents_to_sentiments(docs):
 			'text': docs[i],
 		}
 		for i in range(len(docs))
+		if docs[i] != ""
 	]}
 	
 	global headers
