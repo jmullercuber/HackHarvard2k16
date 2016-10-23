@@ -19,31 +19,44 @@ if __name__ == "__main__":
 							'reddit-all': reddit.get_documents("all", 2)}'''
 
 	# For every source analyze text data with the Microsoft Cognitive Services Text Analytics API
+	sentiments = {}
+	topics = {}
+	
+	# Load previously saved file if avaliable
 	s_file_path = "./sentiments.data"
 	if os.path.isfile(s_file_path):
 		print("Importing sentiments...")
 		s_file = open(s_file_path, 'r')
-		sentiments = json.loads(s_file.read())
-	else:
-		sentiments = {
-			source: cognitive.documents_to_sentiments(docs)
-			for source, docs in internet_documents.items()
-		}
-		s_file = open('sentiments.data', 'w')
-		s_file.write(json.dumps(sentiments))
+		sentiments = json.load(s_file)
 		s_file.close()
 	
 	t_file_path = "./topics.data"
 	if os.path.isfile(t_file_path):
 		print("Importing topics...")
 		t_file = open(t_file_path, 'r')
-		topics = json.loads(t_file.read())
-	else:
-		topics = {
-			source: cognitive.documents_to_topics(docs)
-			for source, docs in internet_documents.items()
-		}
-		t_file = open('topics.data', 'w')
+		topics = json.load(t_file)
+		t_file.close()
+	
+	
+	# Add any new sources in internet_documents if they have not been analyzed
+	update_sentiments = update_topics = False
+	for source, docs in internet_documents.items():
+		
+		if source not in sentiments:
+			sentiments[source] = cognitive.documents_to_sentiments(docs)
+			update_sentiments = True
+	
+		if source not in topics:
+			topics[source] = cognitive.documents_to_topics(docs)
+			update_topics = True
+	
+	if update_sentiments:
+		s_file = open(s_file_path, 'w')
+		s_file.write(json.dumps(sentiments))
+		s_file.close()
+	
+	if update_topics:
+		t_file = open(t_file_path, 'w')
 		t_file.write(json.dumps(topics))
 		t_file.close()
 	
@@ -86,5 +99,7 @@ if __name__ == "__main__":
 	from plot import *
 	docs_per_sources_graph(c['twitter'])
 	bar_graph(c['twitter'])
+	#docs_per_sources_graph(c['reddit-baseball'], c['reddit-cubs'], c['reddit-sports'], c['reddit-dodgers'])
+	#bar_graph(c['reddit-all'])
 
 # Cool, we're done!
