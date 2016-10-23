@@ -1,3 +1,6 @@
+#!/usr/bin/env python2
+# Execute as ./main.py
+
 import cognitive, json, os.path, operator
 # Establish connections to internet sources
 from RedditScraper import RedditScraper
