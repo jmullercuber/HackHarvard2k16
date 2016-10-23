@@ -2,7 +2,12 @@ from Scraper import Scraper
 from TwitterTest import *
 
 class TwitterScraper( Scraper ):
+    def __init__(self, v=False):
+        self.verbose = v
+    
     def get_documents(self):
+        if self.verbose:
+            print "starting TwitterScraper"
         # returns ~1000 documents,
         # 100 tweets from top 10 hashtags
         
@@ -13,6 +18,8 @@ class TwitterScraper( Scraper ):
         
         # Go through the trending hashtags
         for tags in trends:
+            if self.verbose:
+                print "....Looking at trend:", tags
             # Get 100 tweets matching
             r = getResults(b, tags)
             # If getResults didn't fail
@@ -24,6 +31,8 @@ class TwitterScraper( Scraper ):
                     if len(results) >= 1000:
                         return results
         
+        if self.verbose:
+            print "finished TwitterScraper"
         return results
 
 if __name__ == "__main__":
