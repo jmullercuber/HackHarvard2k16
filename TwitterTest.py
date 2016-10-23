@@ -23,7 +23,10 @@ def getResults(bearer, hashtag):
     conn = httplib.HTTPSConnection('api.twitter.com')
     conn.request('GET', url, '', headers)
     response = conn.getresponse().read()
-    return response
+    try:
+        return json.loads( response )
+    except:
+        return {}
 
 # Returns a list of the top 10 trending topics and their tweet counts
 def getTrending(bearer, woeid):
@@ -46,3 +49,15 @@ if __name__ == "__main__":
     b = getBearer(key, secret)
     trends = getTrending(b, WOEID)
     print trends
+    
+    fails = []
+    for t in trends:
+        print t
+        print '\n'*22
+        r = getResults(b, t[0])
+        print r
+        try:
+            json.loads( r )
+        except:
+            fails += [t]
+    print fails
