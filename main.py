@@ -71,7 +71,8 @@ if __name__ == "__main__":
 	# Visualize data
 
 	from plot import *
-	bg = easy_graph2(c['reddit-politics'])
-	g = easy_graph2(c['reddit-the-donald'])
+	docs_per_sources_graph(c['reddit-politics'], c['reddit-the-donald'])
+	bg = easy_graph2(c, 'reddit-politics')
+	g = easy_graph2(c, 'reddit-the-donald')
 
 # Cool, we're done!
