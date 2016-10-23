@@ -1,5 +1,6 @@
 import json, httplib, time
-#Headers for MS API
+
+# Headers for MS API
 headers = {
 	# Request headers
 	'Content-Type': 'application/json',
@@ -8,19 +9,17 @@ headers = {
 
 def documents_to_sentiments(docs):
     # Generate MS api request body for sentiment
-	c_body = dict()
-	c_body['documents'] = []
-	count = 0
-	for doc in docs:
-		d = dict()
-		d['id'] = str(count)
-		d['text'] = doc
-		c_body['documents'].append(d)
-		count += 1
-
+	c_body = { 'documents': [
+		{
+			'id': str(i),
+			'text': docs[i],
+		}
+		for i in range(len(docs))
+	]}
+	
 	global headers
 		
-	#Send request to MS API
+	# Send request to MS API
 	conn = httplib.HTTPSConnection('westus.api.cognitive.microsoft.com')
 	conn.request("POST", "/text/analytics/v2.0/sentiment", json.dumps(c_body), headers)
 	response = conn.getresponse()
@@ -33,19 +32,19 @@ def documents_to_sentiments(docs):
 
 def documents_to_topics(docs):
     # Generate MS api request body for sentiment
-	c_body = dict()
-	c_body['stop_words'] = []
-	c_body['topicsToExclude'] = []
-	c_body['documents'] = []
-	count = 0
-	for doc in docs:
-		d = dict()
-		d['id'] = str(count)
-		d['text'] = doc
-		c_body['documents'].append(d)
-		count += 1
+	c_body = {
+		'stop_words': [],
+		'topicsToExclude': [],
+		'documents': [
+			{
+				'id': str(i),
+				'text': docs[i],
+			}
+			for i in range(len(docs))
+		],
+	}
 
-	#Send request to MS API
+	# Send request to MS API
 	conn = httplib.HTTPSConnection('westus.api.cognitive.microsoft.com')
 	conn.request("POST", "/text/analytics/v2.0/topics", json.dumps(c_body), headers)
 	response = conn.getresponse()
